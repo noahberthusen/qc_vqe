@@ -26,28 +26,28 @@ def get_mo(
     mf.max_cycle = max_cycle
     mf.kernel()
     # get occupied molecular orbitals
-    mo_coeff_occ = mf.mo_coeff[:ne//2]
+    mo_coeff_occ = mf.mo_coeff[ne//2:]
     return mo_coeff_occ
 
 
 
 if __name__ == "__main__":
     # 1D Hubbard model at half filling
-    n = 8
+    n = 4
     h1 = numpy.zeros((n, n))
     for i in range(n-1):
         h1[i, i+1] = h1[i+1, i] = -1.0
-    # h1 = numpy.array([  [ 0, -1,  0, -0.98],
-    #                     [-1,  0, -0.98,  0],
-    #                     [ 0, -0.98,  0, -1],
-    #                     [-0.98,  0, -1,  0]])
+    # h1 = numpy.array([  [ 0, -1,  0, -0.99],
+    #                     [-1,  0, -0.99,  0],
+    #                     [ 0, -0.99,  0, -1],
+    #                     [-0.99,  0, -1,  0]])
     print(h1)
     eri = numpy.zeros((n, n, n, n))
     for i in range(n):
-        if (i == 9):
-            eri[i, i, i, i] = 0.0
+        if (i==0):
+            eri[i, i, i, i] = 1.0
         else:
             eri[i, i, i, i] = 1.0
     # print(eri)
     mo = get_mo(h1, eri, n)
-    print(mo)
+    print(repr(mo))
