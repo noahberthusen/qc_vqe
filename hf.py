@@ -42,7 +42,7 @@ def prepare_Q_matrix(h1,eri,n,ne):
         error = sum(sum(abs(rho-rho_prev)))
         e_prev = E[0]
         energy = 2*sum(E[:int(n/2)])
-        print(repr(psi_d))
+        # print(repr(psi_d))
     print("Converged Energy = "+str(energy))
     return psi_d
 
@@ -79,15 +79,15 @@ if __name__ == "__main__":
     h1 = np.zeros((n, n))
     for i in range(n-1):
         h1[i, i+1] = h1[i+1, i] = -1.0
-    # h1 = np.array([ [ 0., -1.,  0., -0.99],
-    #                 [-1.,  0., -0.99,  0.],
-    #                 [ 0., -0.99,  0., -1.],
-    #                 [-0.99,  0., -1.,  0.]])
+    h1 = np.array([ [ 0., -1.,  0., -1],
+                    [-1.,  0., -1,  0.],
+                    [ 0., -1,  0., -1.],
+                    [-1,  0., -1.,  0.]])
     print(h1)
     eri = np.zeros((n, n, n, n))
     for i in range(n):
         if (False):
-            eri[i, i, i, i] = 2.0
+            eri[i, i, i, i] = 1.0
         else:
             eri[i, i, i, i] = 1.0
     prepare_Q_matrix(h1,eri,n,ne)
